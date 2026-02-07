@@ -90,6 +90,19 @@
 </head>
 <body>
     <div class="container">
+        {{-- Flash Messages --}}
+        @if(session('success'))
+            <div style="background: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                ✅ {{ session('success') }}
+            </div>
+        @endif
+        
+        @if(session('error'))
+            <div style="background: #f8d7da; color: #721c24; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+                ❌ {{ session('error') }}
+            </div>
+        @endif
+        
         <h1> {{$product->name}} </h1>
 
         <span class="badge"> {{$product->category}} </span>
@@ -122,7 +135,10 @@
         <a href="/products" class="btn btn-secondary">← Kembali ke Daftar Produk</a>
         
         @if($product->stock > 0)
-            <a href="#" class="btn">Tambah ke Keranjang</a>
+            <form action=" {{ route('cart.add', $product->id) }} " method="post">
+                @csrf
+                <button type="submit" class="btn">Add To Cart</button>
+            </form>
         @endif
     </div>
 </body>
