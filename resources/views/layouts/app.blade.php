@@ -14,7 +14,7 @@
                 {{-- Logo --}}
                 <div class="flex-shrink-0">
                     <a href="/" class="text-2xl font-bold text-soya-green tracking-wider">
-                        SOYA
+                        FreshSoy
                     </a>
                 </div>
 

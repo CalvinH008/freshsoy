@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Home - SOYA Shop')
+@section('title', 'Home - FreshSoy')
 
 @section('content')
 <section class="relative bg-gradient-to-b from-white to-soya-cream py-20">
     <div class="max-w-7xl mx-auto px-4 text-center">
-        <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-4">SOYA:</h1>
+        <h1 class="text-5xl md:text-6xl font-bold text-gray-800 mb-4">FreshSoy:</h1>
         <p class="text-2xl md:text-3xl text-soya-green font-light mb-12 italic">Pure Goodness</p>
         
         <div class="bg-green-50 border-2 border-green-400 rounded-xl p-6 max-w-lg mx-auto">
