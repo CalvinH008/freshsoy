@@ -54,7 +54,11 @@
             @foreach ($products as $product)
             <tr>
                 <td> {{$product->id}} </td>
-                <td> {{$product->name}} </td>
+                <td> 
+                    <a href="/products/{{ $product->id }}" style="color: #4A6741; text-decoration: none;">
+                        {{ $product->name }}
+                    </a> 
+                </td>
                 <td> {{$product->description}} </td>
                 <td> Rp. {{number_format($product->price, 0, ',', '.')}} </td>
                 <td> {{$product->category}} </td>

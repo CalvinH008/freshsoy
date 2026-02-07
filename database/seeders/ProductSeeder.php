@@ -31,7 +31,7 @@ class ProductSeeder extends Seeder
                 'stock' => '20'
             ],
             [
-                'name' => 'Soya Greentea',
+                'name' => 'Soya Coklat',
                 'description' => 'Soya Coklat adalah minuman kombinasi coklat yang kaya antioksidan (katekin/EGCG) dengan susu kedelai (soya) sebagai sumber protein nabati.', 
                 'price' => '12000',
                 'category' => 'minuman',

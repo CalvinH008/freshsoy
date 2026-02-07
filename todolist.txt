@@ -1,0 +1,189 @@
+🟩 WEEK 1: DATABASE & LOGIC (Hari 1-7)
+HARI 1: Setup Laravel + Database ✅
+
+ Laravel terinstall 
+ Setup database di .env
+ Test koneksi database
+ Buat migration products
+📚 Baca: Migrations, Database Configuration
+✍️ Tugas: Insert 1 data manual lewat phpMyAdmin
+
+
+HARI 2: Model & Eloquent ✅
+
+ Buat model Product
+ Pahami $fillable & mass assignment
+ Test CRUD di php artisan tinker
+ Insert, read, update, delete manual
+📚 Baca: Eloquent ORM, Eloquent Models
+✍️ Tugas: Buat 3 produk via tinker, cek pakai Product::all()
+
+
+HARI 3: Seeder & Factory ✅
+
+ Buat seeder untuk 5 produk
+ Jalankan php artisan db:seed
+ Buat factory untuk generate dummy data
+📚 Baca: Database Seeding, Factories
+✍️ Tugas: Tambah 10 produk random via factory
+
+
+HARI 4: Controller & Route (Tampilkan Produk) ✅
+
+ Buat ProductController
+ Method index() untuk ambil semua produk
+ Route GET /produk
+ View HTML sederhana (list produk pakai <ul> biasa)
+📚 Baca: Controllers, Routing
+✍️ Tugas: Tambah route /produk/{id} untuk detail
+
+
+HARI 5: Detail Produk & Blade Dasar ✅
+
+ Method show($id) di controller
+ View detail produk (HTML biasa + Blade syntax)
+ Pahami @foreach, {{ $variable }}, @if
+📚 Baca: Blade Basics, Blade Directives
+✍️ Tugas: Tambah conditional: tampilkan "Stok Habis" kalau stock = 0
+
+
+HARI 6: Laravel Breeze (Auth)
+
+ Install laravel/breeze
+ Setup: php artisan breeze:install blade
+ Test register, login, logout
+ Pahami middleware auth
+📚 Baca: Laravel Breeze, Authentication
+✍️ Tugas: Coba akses /produk dengan dan tanpa login
+
+
+HARI 7: Proteksi Route + Review Week 1
+
+ Tambah middleware auth ke route tertentu
+ Update navbar: tampil "Login" atau "Logout"
+ REVIEW: Test semua fitur week 1
+📚 Baca: Middleware
+✍️ Tugas: Screenshot semua halaman yang udah dibuat
+
+
+🟨 WEEK 2: CART & CHECKOUT (Hari 8-14)
+HARI 8: Session Cart (Konsep + Logic)
+
+ Pahami cara kerja session di Laravel
+ Buat CartController
+ Method add() untuk tambah produk ke session
+ Test: dd(session('cart'))
+📚 Baca: HTTP Session
+✍️ Tugas: Tambah 3 produk, cek struktur data session
+
+
+HARI 9: Tampilkan Cart
+
+ Method index() di CartController
+ View cart: tabel HTML sederhana
+ Loop isi cart, hitung subtotal & total
+📚 Baca: Blade Loops, Collection Methods
+✍️ Tugas: Tambah kolom "Hapus" di tabel
+
+
+HARI 10: Update & Hapus Cart
+
+ Method update() untuk ubah quantity
+ Method destroy() untuk hapus item
+ Form HTML sederhana (input + button)
+📚 Baca: Form Handling, HTTP Methods
+✍️ Tugas: Validasi quantity: min 1, max 100
+
+
+HARI 11: Form Request & Validation
+
+ Buat FormRequest untuk validasi cart
+ Pahami rules(), messages()
+ Tampilkan error di view pakai @error
+📚 Baca: Form Request Validation
+✍️ Tugas: Tambah validasi: produk harus exist di database
+
+
+HARI 12: Database Order (Migration)
+
+ Migration orders (user_id, total, status)
+ Migration order_items (order_id, product_id, qty, price)
+ Jalankan migrate
+📚 Baca: Database Relationships
+✍️ Tugas: Cek tabel di database, screenshot struktur
+
+
+HARI 13: Model Order & Relasi
+
+ Model Order & OrderItem
+ Relasi hasMany, belongsTo
+ Test di tinker: Order::find(1)->items
+📚 Baca: Eloquent Relationships
+✍️ Tugas: Buat 1 order manual via tinker
+
+
+HARI 14: Proses Checkout (Database Transaction)
+
+ CheckoutController method store()
+ Insert ke orders & order_items
+ Database Transaction untuk konsistensi
+ Kosongkan session cart
+📚 Baca: Database Transactions
+✍️ Tugas: Test checkout, cek database orders
+
+
+🟦 WEEK 3: ADMIN & FINALISASI (Hari 15-20)
+HARI 15: Payment Simulasi
+
+ Halaman pilih metode bayar (form radio sederhana)
+ Update status order jadi "Pending"
+ Halaman konfirmasi order
+📚 Baca: (pure logic, no library)
+✍️ Tugas: Buat halaman "Cek Status Order"
+
+
+HARI 16: Middleware Admin
+
+ Tambah kolom is_admin di tabel users
+ Buat middleware IsAdmin
+ Proteksi route admin
+📚 Baca: Custom Middleware
+✍️ Tugas: Test akses admin dengan user biasa (harus redirect)
+
+
+HARI 17: Admin CRUD Produk (Part 1)
+
+ Route resource admin/products
+ Controller Admin\ProductController
+ Method index() & create()
+ View list & form create (HTML sederhana)
+📚 Baca: Resource Controllers
+✍️ Tugas: Buat 1 produk lewat form admin
+
+
+HARI 18: Admin CRUD Produk (Part 2)
+
+ Method store(), edit(), update(), destroy()
+ Upload gambar produk (storage)
+ Validasi form
+📚 Baca: File Storage, Validation
+✍️ Tugas: Edit & hapus produk, cek database
+
+
+HARI 19: Admin Order Management
+
+ Halaman admin lihat semua order
+ Filter by status (dropdown)
+ Update status order
+ Detail order items
+📚 Baca: Query Scopes
+✍️ Tugas: Update 1 order jadi "Completed"
+
+
+HARI 20: TESTING & POLISH
+
+ Test semua flow: Register → Browse → Cart → Checkout → Admin
+ Fix bug yang ditemukan
+ Tambah styling minimal (boleh inline CSS atau bootstrap CDN)
+ Buat README.md (cara install, login admin)
+ Backup database & push ke GitHub

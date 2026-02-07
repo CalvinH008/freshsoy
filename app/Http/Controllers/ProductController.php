@@ -16,6 +16,20 @@ class ProductController extends Controller
          return view('products.index', compact('products'));
     }
 
+     /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $product = Product::find($id);
+
+        if(!$product){
+            abort(403, 'Product Not Found');
+        }
+
+        return view('products.show', compact('product'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -28,14 +42,6 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
     {
         //
     }
