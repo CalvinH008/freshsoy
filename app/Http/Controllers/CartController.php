@@ -7,12 +7,27 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function add(Request $request, $id){
+    public function index()
+    {
+        // ambil cart dari session
+        $cart = session()->get('cart', []);
+
+        // hitung total harga
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['price'] * $item['quantity'];
+        }
+
+        return view('cart.index', compact('cart', 'total'));
+    }
+
+    public function add(Request $request, $id)
+    {
         // cari product berdasarkan id
         $product = Product::find($id);
-        
+
         // cek apakah ada product
-        if(!$product){
+        if (!$product) {
             // kalau produk gada return dengan pesan error
             return redirect()->back()->with('error', 'Product Not Found');
         }
@@ -21,10 +36,10 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
 
         // cek apakah produk sudah ada di cart
-        if(isset($cart[$id])){
+        if (isset($cart[$id])) {
             // kalau ada tambah quantity
             $cart[$id]['quantity']++;
-        }else{
+        } else {
             // kalau belum ada, tambah produk ke cart
             $cart[$id] = [
                 'product_id' => $product->id,
@@ -40,5 +55,51 @@ class CartController extends Controller
 
         // redirect dan return alert sukses
         return redirect()->back()->with('success', 'Product add successfully');
+    }
+
+    public function update(Request $request, $id)
+    {
+        // validasi input
+        $request->validate([
+            'quantity' => 'required|integer|min:1|max:100'
+        ]);
+
+        // ambil cart dari session
+        $cart = session()->get('cart', []);
+
+        // cek apakah ada produk di cart
+        if (isset($cart[$id])) {
+            // update quantity
+            $cart[$id]['quantity'] = $request->quantity;
+
+            // simpan ke session
+            session()->put('cart', $cart);
+
+            return redirect()->back()->with('success', 'Quantity Updated Successfully');
+        }
+
+        return redirect()->back()->with('error', 'Product Not Found In Cart');
+    }
+
+    public function destroy($id)
+    {
+        // ambil cart dari session
+        $cart = session()->get('cart', []);
+
+        // cek apakah ada produk di cart
+        if (isset($cart[$id])) {
+            // simpan nama produk sebelum dihapus
+            $productName = $cart[$id]['name'];
+
+            // hapus dari cart
+            unset($cart[$id]);
+
+            // simpan ke session
+            session()->put('cart', $cart);
+
+            return redirect()->back()->with('success', 'Product "' . $productName . '" Deleted Suscessfully');
+        }
+
+        return redirect()->back()->with('error', 'Product Not Found In Cart');
     }
 }

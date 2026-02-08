@@ -12,18 +12,18 @@ class ProductController extends Controller
      */
     public function index()
     {
-         $products = Product::all();
-         return view('products.index', compact('products'));
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
-     /**
+    /**
      * Display the specified resource.
      */
     public function show($id)
     {
         $product = Product::find($id);
 
-        if(!$product){
+        if (!$product) {
             abort(403, 'Product Not Found');
         }
 

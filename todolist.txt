@@ -47,7 +47,7 @@ HARI 5: Detail Produk & Blade Dasar ✅
 ✍️ Tugas: Tambah conditional: tampilkan "Stok Habis" kalau stock = 0
 
 
-HARI 6: Laravel Breeze (Auth)
+HARI 6: Laravel Breeze (Auth) ✅
 
  Install laravel/breeze
  Setup: php artisan breeze:install blade
@@ -57,7 +57,7 @@ HARI 6: Laravel Breeze (Auth)
 ✍️ Tugas: Coba akses /produk dengan dan tanpa login
 
 
-HARI 7: Proteksi Route + Review Week 1
+HARI 7: Proteksi Route + Review Week 1 ✅
 
  Tambah middleware auth ke route tertentu
  Update navbar: tampil "Login" atau "Logout"
@@ -67,7 +67,7 @@ HARI 7: Proteksi Route + Review Week 1
 
 
 🟨 WEEK 2: CART & CHECKOUT (Hari 8-14)
-HARI 8: Session Cart (Konsep + Logic)
+HARI 8: Session Cart (Konsep + Logic) ✅
 
  Pahami cara kerja session di Laravel
  Buat CartController
@@ -77,7 +77,7 @@ HARI 8: Session Cart (Konsep + Logic)
 ✍️ Tugas: Tambah 3 produk, cek struktur data session
 
 
-HARI 9: Tampilkan Cart
+HARI 9: Tampilkan Cart ✅
 
  Method index() di CartController
  View cart: tabel HTML sederhana
@@ -86,7 +86,7 @@ HARI 9: Tampilkan Cart
 ✍️ Tugas: Tambah kolom "Hapus" di tabel
 
 
-HARI 10: Update & Hapus Cart
+HARI 10: Update & Hapus Cart ✅
 
  Method update() untuk ubah quantity
  Method destroy() untuk hapus item
