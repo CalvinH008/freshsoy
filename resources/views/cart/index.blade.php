@@ -162,6 +162,10 @@
                 </tr>
             </tbody>
         </table>
+        <div style="margin-top: 30px;">
+            <a href="/products" class="btn btn-secondary">← Lanjut Belanja</a>
+            <a href="{{ route('checkout.index') }}" class="btn">Checkout →</a>
+        </div>
     @else
         <div class="empty-cart">
             <p style="font-size: 48px; margin-bottom: 20px;">🛒</p>
