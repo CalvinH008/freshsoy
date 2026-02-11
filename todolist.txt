@@ -41,7 +41,7 @@ HARI 7: Proteksi Route ✅
  Middleware auth ke route
  Navbar conditional
 
-✅ WEEK 2: CART (Hari 8-10) - DONEHARI 8: Session Cart (Add) ✅
+WEEK 2: CART (Hari 8-10) - DONEHARI 8: Session Cart (Add) ✅
 
  CartController
  Method add()

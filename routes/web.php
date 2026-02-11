@@ -35,4 +35,11 @@ Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.s
 Route::get('/checkout/success/{orderId}', [CheckoutController::class, 'success'])->name('checkout.success')->middleware('auth');
 Route::get('/my-orders', [CheckoutController::class, 'myOrders'])->name('my.orders')->middleware('auth');
 
+// Route admin
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (){
+    Route::get('/dashboard', function () {
+        return 'Admin Dashboard';
+    });
+});
+
 require __DIR__ . '/auth.php';
