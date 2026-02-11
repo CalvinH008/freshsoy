@@ -59,7 +59,7 @@ HARI 10: Update & Delete Cart ✅
  Method destroy()
  Form update & delete
 
-🟨 WEEK 2-3: CHECKOUT & ADMIN (Hari 11-20) 
+🟨 WEEK 2-3: CHECKOUT & ADMIN (Hari 11-20) ✅
  HARI 11: Database Order (Migration)
 
  Migration orders (user_id, total, status, payment_method)
@@ -68,7 +68,7 @@ HARI 10: Update & Delete Cart ✅
 📚 Baca: Database Relationships
 ✍️ Tugas: Screenshot struktur tabel di phpMyAdmin
 
-⏳ HARI 12: Model Order & Relasi
+⏳ HARI 12: Model Order & Relasi ✅
 
  Model Order
  Model OrderItem
@@ -77,7 +77,7 @@ HARI 10: Update & Delete Cart ✅
 📚 Baca: Eloquent Relationships
 ✍️ Tugas: Buat 1 order manual via tinker
 
-⏳ HARI 13: Proses Checkout
+⏳ HARI 13: Proses Checkout ✅
 
  CheckoutController dibuat
  Method checkout() - tampilkan form checkout
@@ -87,7 +87,7 @@ HARI 10: Update & Delete Cart ✅
 📚 Baca: Database Transactions
 ✍️ Tugas: Test checkout, cek database
 
-⏳ HARI 14: Payment Simulasi
+⏳ HARI 14: Payment Simulasi ✅
 
  Halaman pilih metode bayar (Bank Transfer, E-Wallet, COD)
  Update status order → "Pending"

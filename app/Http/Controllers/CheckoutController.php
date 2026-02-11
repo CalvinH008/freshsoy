@@ -33,7 +33,7 @@ class CheckoutController extends Controller
     {
         // validasi input
         $request->validate([
-            'payment_method' => 'required|in:bank_transfer,e-wallet,cod'
+            'payment_method' => 'required|in:bank_transfer,e_wallet,cod'
         ]);
 
         // ambil cart dari session
@@ -79,7 +79,7 @@ class CheckoutController extends Controller
             session()->forget('cart');
 
             // direct ke halaman sukses
-            return redirect()->route('checkout.index', $order->id)->with('success', 'Order Created Successfully');
+            return redirect()->route('checkout.success', $order->id)->with('success', 'Order Created Successfully');
         } catch (\Exception $error) {
             // rollback kalau ada error
             DB::rollBack();
@@ -98,5 +98,11 @@ class CheckoutController extends Controller
         }
 
         return view('checkout.success', compact('order'));
+    }
+
+    public function myOrders(){
+        // ambil semua order user yang login, urutkan yang paling baru
+        $orders = Order::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        return view('checkout.my-orders', compact('orders'));
     }
 }

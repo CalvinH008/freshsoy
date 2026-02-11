@@ -144,7 +144,7 @@
             <p>Silakan transfer ke rekening berikut:</p>
             <p style="font-weight: bold;">
                 BCA: 1234567890<br>
-                a.n. Soya Shop
+                a.n. FreshSoy
             </p>
             <p style="font-size: 14px; color: #666;">
                 Konfirmasi pembayaran akan diproses maksimal 1x24 jam
@@ -154,7 +154,7 @@
 
         <div style="margin-top: 30px;">
             <a href="/products" class="btn">Lanjut Belanja</a>
-            <a href="/dashboard" class="btn btn-secondary">Lihat Pesanan Saya</a>
+            <a href="{{ route('my.orders') }}" class="btn btn-secondary">Lihat Pesanan Saya</a>
         </div>
     </div>
 </body>

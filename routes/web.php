@@ -33,4 +33,6 @@ Route::delete('cart/destroy/{id}', [CartController::class, 'destroy'])->name('ca
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index')->middleware('auth');
 Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store')->middleware('auth');
 Route::get('/checkout/success/{orderId}', [CheckoutController::class, 'success'])->name('checkout.success')->middleware('auth');
+Route::get('/my-orders', [CheckoutController::class, 'myOrders'])->name('my.orders')->middleware('auth');
+
 require __DIR__ . '/auth.php';
