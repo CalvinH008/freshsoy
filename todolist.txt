@@ -146,7 +146,7 @@ Recent Orders
 
 ⏳ HARI 20: REDESIGN UI & POLISH
 
- Implement design UI dari kamu ✅
+ Implement design UI dari kamu 
  Ganti layout Breeze → layout custom
  Apply design ke:
 
@@ -155,6 +155,11 @@ Recent Orders
  Checkout
  Admin panel
  Auth pages
+
+ Fitur tambahan:
+  - Sort produk (harga, nama)
+  - Search produk
+  - Filter kategori
 
  Fix error Breeze ($slot, navigation, dll)
  Responsive mobile
