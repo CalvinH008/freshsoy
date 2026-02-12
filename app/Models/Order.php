@@ -20,4 +20,28 @@ class Order extends Model
     public function items(){
         return $this->hasMany(OrderItem::class);
     }
+
+    // ═══════════════════════════════════════════════════
+    // QUERY SCOPES (Reusable Filters)
+    // ═══════════════════════════════════════════════════
+
+    // filter order yang pending
+    public function scopePending($query){
+        return $query->where('status', 'pending');
+    }
+
+    // filter order yang complete
+    public function scopeCompleted($query){
+        return $query->where('status', 'completed');
+    }
+
+    // filter order yang cancel
+    public function scopeCancelled($query){
+        return $query->where('status', 'cancelled');
+    }
+
+    // Filter by status yang dynamic
+    public function scopeStatus($query, $status){
+        return $query->where('status', $status);
+    }
 }

@@ -143,6 +143,9 @@
                 <span>Logged in as: <strong> {{ auth()->user()->name }} </strong></span>
                 <form action=" {{ route('logout') }} " method="post" style="display: inline;">
                     @csrf
+                    <a href="{{ route('admin.orders.index') }}" class="...">
+                        🛒 Orders
+                    </a>
                     <button type="submit" class="btn">Logout</button>
                 </form>
             </div>
