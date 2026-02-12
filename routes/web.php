@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,10 +38,9 @@ Route::get('/checkout/success/{orderId}', [CheckoutController::class, 'success']
 Route::get('/my-orders', [CheckoutController::class, 'myOrders'])->name('my.orders')->middleware('auth');
 
 // Route admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function (){
-    Route::get('/dashboard', function () {
-        return 'Admin Dashboard';
-    });
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function (){
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('products', AdminProductController::class);
 });
 
 require __DIR__ . '/auth.php';

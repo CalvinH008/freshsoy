@@ -95,7 +95,7 @@ HARI 10: Update & Delete Cart ✅
  Instruksi pembayaran
 ✍️ Tugas: Buat halaman "Lihat Order Saya"
 
-⏳ HARI 15: Middleware Admin
+⏳ HARI 15: Middleware Admin ✅
 
  Migration: tambah kolom is_admin di users
  Buat middleware IsAdmin
@@ -104,7 +104,7 @@ HARI 10: Update & Delete Cart ✅
 📚 Baca: Custom Middleware
 ✍️ Tugas: Test akses admin dengan user biasa
 
-⏳ HARI 16: Admin Dashboard
+⏳ HARI 16: Admin Dashboard ✅  
 
  Layout admin (sidebar)
  Dashboard statistik:
@@ -127,42 +127,84 @@ Recent Orders
 📚 Baca: Resource Controllers
 ✍️ Tugas: Buat 1 produk lewat admin
 
-⏳ HARI 18: Admin CRUD Produk (Part 2)
-
- Method edit(), update(), destroy()
- Upload gambar produk (storage)
+⏳ HARI 18: Admin CRUD Produk (Part 2) + Upload Foto
+ Method edit() - tampilkan form edit produk
+ Method update() - update produk di database
+ Method destroy() - hapus produk dari database
+ Upload gambar produk:
+    - Validasi file (image, max:2048, mimes:jpg,png)
+    - Simpan ke storage/app/public/products
+    - Link storage ke public (php artisan storage:link)
+    - Tampilkan preview gambar
+    - Hapus gambar lama saat update/delete
  Validasi form
- Delete dengan konfirmasi
-📚 Baca: File Storage, Validation
-✍️ Tugas: Edit & hapus produk
-⏳ HARI 19: Admin Order Management
+ Delete dengan konfirmasi JavaScript
+ Update view index.blade.php:
+    - Tambah kolom Foto
+    - Button Edit & Delete
+📚 Baca: File Storage, Validation, Storage Facade
+✍️ Tugas: 
+   - Edit produk (ubah harga + ganti foto)
+   - Hapus 1 produk
+   - Cek folder storage/app/public/products
 
- Halaman admin lihat semua order
+⏳ HARI 19: Admin Order Management
+ Route admin/orders
+ Controller Admin\OrderController
+ Method index() - tampilkan semua order
  Filter by status (All, Pending, Completed, Cancelled)
- Detail order (produk apa aja yang dibeli)
- Update status order (dropdown)
+    - Pakai Query Scopes
+    - GET /admin/orders?status=pending
+ Method show() - detail order
+    - Produk apa aja yang dibeli
+    - Data customer
+    - Total pembayaran
+ Method updateStatus() - update status order
+    - Dropdown: Pending → Completed / Cancelled
+    - AJAX (optional) atau form biasa
+ View admin list orders (simple table)
+ View detail order
 📚 Baca: Query Scopes, Eloquent Filtering
-✍️ Tugas: Update 1 order jadi "Completed"
+✍️ Tugas: 
+   - Update 1 order dari Pending → Completed
+   - Filter order by status "Pending"
 
 ⏳ HARI 20: REDESIGN UI & POLISH
-
- Implement design UI dari kamu 
- Ganti layout Breeze → layout custom
- Apply design ke:
-
- Products (list & detail)
- Cart
- Checkout
- Admin panel
- Auth pages
-
- Fitur tambahan:
-  - Sort produk (harga, nama)
-  - Search produk
-  - Filter kategori
-
- Fix error Breeze ($slot, navigation, dll)
- Responsive mobile
- Testing all features (register → checkout → admin)
- Buat README.md
- Push ke GitHub
+ Implement design UI yang konsisten
+ Ganti layout Breeze → layout custom (atau enhance Breeze)
+ Apply design ke semua halaman:
+    ✅ Frontend (User):
+       - Products (list & detail)
+       - Cart
+       - Checkout
+       - My Orders
+       - Auth pages (login, register)
+    ✅ Backend (Admin):
+       - Dashboard
+       - Products (list, create, edit)
+       - Orders (list, detail)
+ Fitur tambahan (Frontend):
+    - Sort produk (harga terendah/tertinggi, nama A-Z)
+    - Search produk (by nama)
+    - Filter kategori (opsional, kalau ada waktu buat migration kategori)
+ Fix error Breeze:
+    - $slot tidak terdefinisi
+    - navigation.blade.php
+    - Responsive mobile
+ Testing all features:
+    - Register → Login → Browse → Add to Cart → Checkout → My Orders
+    - Admin: Login → Dashboard → CRUD Products → Manage Orders
+ Buat README.md:
+    - Cara install
+    - Cara setup database
+    - Cara jalankan seeder
+    - Credentials admin & user
+    - Fitur yang ada
+ Push ke GitHub:
+    - git init
+    - git add .
+    - git commit -m "Initial commit"
+    - git remote add origin <url>
+    - git push -u origin main
+📚 Baca: Tailwind CSS, Blade Components, Git
+✍️ Tugas: Deploy ke localhost & screenshot semua halaman
