@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -40,7 +41,12 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0', 
             'category' => 'required|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
         ]);
+
+        if($request->hasFile('image')){
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        }
 
         Product::create($validated);
 
@@ -60,7 +66,11 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // Cari product berdasarkan ID
+        // findOrFail() = kalau gak ketemu, otomatis 404
+        $product = Product::findOrFail($id);
+
+        return view('admin.products.edit', compact('product'));    
     }
 
     /**
@@ -68,7 +78,35 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // cari product
+        $product = Product::findOrFail($id);
+
+        // validasi
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
+        ]);
+
+        // ubah foto baru jika user upload foto yang baru
+        if($request->hasFile('image')){
+            // hapus foto lama jika ada
+            if($product->image){
+                // Storage::delete() = hapus file dari storage
+                // Parameter: path file (contoh: products/abc123.jpg)
+                Storage::disk('public')->delete($product->image);
+            }
+
+            // simpan foto baru
+            $validated['image'] = $request->file('image')->store('products', 'public');
+        }
+
+        // simpan perubahan
+        $product->update($validated);
+        
+        return redirect()->route('admin.products.index')->with('success', 'Product Updated Successfully');
     }
 
     /**
@@ -76,6 +114,17 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // cari product
+        $product = Product::findOrFail($id);
+
+        // hapus foto jika ada
+        if($product->image){
+            Storage::disk('public')->delete($product->image);
+        }
+
+        // hapus dari db
+        $product->delete();
+
+        return redirect()->route('admin.products.index')->with('success', 'Product Deleted Successfully');
     }
 }

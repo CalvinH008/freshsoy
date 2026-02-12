@@ -103,7 +103,8 @@
 
         {{-- Form --}}
         <div class="card">
-            <form action="{{ route('admin.products.store') }}" method="POST">
+            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+                {{-- enctype="multipart/form-data" = WAJIB untuk upload file! --}}>
                 @csrf
                 {{-- @csrf = Token untuk proteksi CSRF attack --}}
                 {{-- Laravel wajib pakai ini di semua form POST/PUT/DELETE --}}
@@ -141,7 +142,7 @@
                         <div class="error">{{ $message }}</div>
                     @enderror
                 </div>
-                
+
                 {{-- Category --}}
                 <div class="form-group">
                     <label for="category">Category *</label>
@@ -175,6 +176,18 @@
                     @enderror
                 </div>
 
+                {{-- FOTO --}}
+                <div class="form-group">
+                    <label for="image">Foto Produk </label>
+                    <input type="file" 
+                           id="image" 
+                           name="image" 
+                           accept="image/*">
+                    <div class="hint">Format: JPG, PNG, GIF. Maksimal 2MB.</div>
+                    
+                    @error('image')
+                        <div class="error">{{ $message }}</div>
+                    @enderror
                 {{-- Submit Button --}}
                 <button type="submit" class="btn">💾 Simpan Produk</button>
             </form>

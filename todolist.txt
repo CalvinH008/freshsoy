@@ -117,7 +117,7 @@ Recent Orders
 📚 Baca: Eloquent Aggregates (count, sum)
 ✍️ Tugas: Tambah widget "Top Products" (optional)
 
-⏳ HARI 17: Admin CRUD Produk (Part 1)
+⏳ HARI 17: Admin CRUD Produk (Part 1) ✅
 
  Route resource admin/products
  Controller Admin\ProductController
@@ -127,7 +127,9 @@ Recent Orders
 📚 Baca: Resource Controllers
 ✍️ Tugas: Buat 1 produk lewat admin
 
-⏳ HARI 18: Admin CRUD Produk (Part 2) + Upload Foto
+⏳ HARI 18: Admin CRUD Produk (Part 2) ✅
+
+ Upload Foto
  Method edit() - tampilkan form edit produk
  Method update() - update produk di database
  Method destroy() - hapus produk dari database
@@ -173,13 +175,13 @@ Recent Orders
  Implement design UI yang konsisten
  Ganti layout Breeze → layout custom (atau enhance Breeze)
  Apply design ke semua halaman:
-    ✅ Frontend (User):
+      Frontend (User):
        - Products (list & detail)
        - Cart
        - Checkout
        - My Orders
        - Auth pages (login, register)
-    ✅ Backend (Admin):
+      Backend (Admin):
        - Dashboard
        - Products (list, create, edit)
        - Orders (list, detail)

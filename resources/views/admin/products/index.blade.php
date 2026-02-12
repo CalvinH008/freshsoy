@@ -137,6 +137,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Foto</th>
                     <th>Nama Produk</th>
                     <th>Category</th>
                     <th>Size</th>
@@ -149,14 +150,37 @@
                 @forelse($products as $product)
                     <tr>
                         <td>{{ $product->id }}</td>
+                        <td>
+                            @if ($product->image)
+                                <img src="{{ asset('storage/' . $product->image) }}" width="80">
+                            @else
+                                -
+                            @endif
+                        </td>
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->category }}</td>
                         <td>{{ $product->size }}</td>
                         <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                         <td>{{ $product->stock }}</td>
                         <td>
-                            {{-- Nanti HARI 18 tambahin button Edit & Delete --}}
-                            <span style="color: #999;">Edit | Delete</span>
+                            {{-- edit button --}}
+                            <a
+                                href=" {{ route('admin.products.edit', $product->id) }} "class="btn btn-warning btn-small">✏️
+                                Edit
+                            </a>
+
+                            {{-- Form Delete --}}
+                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST"
+                                style="display: inline;"
+                                onsubmit="return confirm('Yakin hapus produk {{ $product->name }}?')">
+                                @csrf
+                                @method('DELETE')
+                                {{-- @method('DELETE') = spoofing method (form HTML cuma support GET/POST) --}}
+
+                                <button type="submit" class="btn btn-danger btn-small">
+                                    🗑️ Hapus
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 @empty
