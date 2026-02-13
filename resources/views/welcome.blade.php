@@ -4,223 +4,240 @@
 
 @section('content')
 
-    <!-- HERO SECTION -->
-    <section class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
+    <!-- HERO -->
+    <section
+        class="relative overflow-hidden min-h-screen flex items-center justify-center 
+           bg-gradient-to-br 
+           from-white 
+           via-yellow-50 
+           to-amber-100 
+           text-center px-6">
 
-                <!-- Content -->
-                <div>
-                    <div class="inline-block bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm font-medium mb-4">
-                        🌱 Fresh & Healthy
-                    </div>
-                    <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                        Fresh Soy Milk,<br>
-                        Delivered Daily
-                    </h1>
-                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                        Premium quality soy milk and tofu products, made fresh every morning for your healthy lifestyle.
-                    </p>
-                    <div class="flex items-center space-x-4">
-                        <a href="#products"
-                            class="bg-green-600 text-white px-8 py-3.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/30">
-                            Shop Now
-                        </a>
-                        <a href="#about"
-                            class="border-2 border-gray-300 text-gray-700 px-8 py-3.5 rounded-lg font-semibold hover:border-gray-400 hover:bg-gray-50 transition-all">
-                            Learn More
-                        </a>
-                    </div>
-                </div>
+        <div class="max-w-3xl">
 
-                <!-- Image -->
-                <div class="relative">
-                    <div class="absolute inset-0 bg-green-100 rounded-full blur-3xl opacity-20"></div>
-                    <img src="{{ asset('images/hero.jpg') }}" alt="FreshSoy Product"
-                        class="relative w-full max-w-lg mx-auto rounded-2xl">
-                </div>
-            </div>
-        </div>
-    </section>
+            <span class="text-xs tracking-[0.3em] uppercase text-green-600 font-medium">
+                Fresh & Healthy Lifestyle
+            </span>
 
-    <!-- PRODUCTS SECTION -->
-    <section id="products" class="py-20 bg-gradient-to-b from-white to-gray-50 scroll-mt-20">
-        <div class="max-w-7xl mx-auto px-6">
+            <h1 class="mt-6 text-4xl md:text-6xl leading-tight">
+                <span class="text-[#DC2626]"
+                    style="font-family: 'Fredoka', sans-serif; font-weight: 700; letter-spacing: 1px;">
+                    FreshSoy
+                </span>
 
-            <!-- Header -->
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-3">Our Products</h2>
-                <p class="text-gray-600 text-lg">Fresh soy milk & tofu, delivered to your door</p>
-            </div>
+                <span class="text-gray-50 font-semibold" style="text-shadow: 0 4px 12px rgba(0,0,0,0.35);">
+                    Milk<br>
+                    Made Every Morning
+                </span>
+            </h1>
 
-            <!-- Products Grid (3 KOLOM) -->
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                @foreach ($products as $product)
-                    <div
-                        class="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-2xl hover:border-gray-200 transition-all duration-300 group">
+            <p class="mt-8 text-gray-700 leading-relaxed text-base md:text-lg max-w-2xl mx-auto">
+                Crafted daily using selected premium soybeans.
+                Clean ingredients, hygienic process, and rich natural taste —
+                made to support your healthy routine.
+            </p>
 
-                        <!-- Image -->
-                        <a href="/products/{{ $product->id }}" class="block">
-                            <div class="aspect-square bg-gray-50 flex items-center justify-center overflow-hidden relative">
-                                @if ($product->image)
-                                    <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}"
-                                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                @else
-                                    <span class="text-6xl">🥛</span>
-                                @endif
+            <div class="mt-12 flex justify-center gap-4">
 
-                                <!-- Stock Badge -->
-                                @if ($product->stock > 0)
-                                    <div
-                                        class="absolute top-3 right-3 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
-                                        In Stock
-                                    </div>
-                                @else
-                                    <div
-                                        class="absolute top-3 right-3 bg-red-500 text-white text-xs font-semibold px-3 py-1 rounded-full shadow-lg">
-                                        Sold Out
-                                    </div>
-                                @endif
-                            </div>
-                        </a>
-
-                        <!-- Info -->
-                        <div class="p-5">
-                            <a href="/products/{{ $product->id }}">
-                                <h3
-                                    class="font-semibold text-gray-900 mb-2 line-clamp-2 group-hover:text-green-600 transition-colors">
-                                    {{ $product->name }}
-                                </h3>
-                            </a>
-
-                            <!-- Price & Size -->
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="text-2xl font-bold text-gray-900">
-                                    Rp {{ number_format($product->price, 0, ',', '.') }}
-                                </span>
-                                @if ($product->size)
-                                    <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                                        {{ $product->size }}
-                                    </span>
-                                @endif
-                            </div>
-
-                            <!-- View Details Button -->
-                            <a href="/products/{{ $product->id }}"
-                                class="block w-full text-center bg-green-600 text-white py-2.5 rounded-lg font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/20">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-
-            <!-- View All Button -->
-            <div class="text-center">
-                <a href="/products"
-                    class="inline-flex items-center space-x-2 bg-gray-900 text-white px-8 py-3.5 rounded-lg font-semibold hover:bg-gray-800 transition-colors shadow-lg">
-                    <span>View All Products</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6">
-                        </path>
-                    </svg>
+                <a href="#products"
+                    class="bg-[#DC2626] text-white px-8 py-3 rounded-md text-sm font-medium 
+                       hover:bg-red-700 transition-all duration-300 shadow-sm">
+                    Shop Products
                 </a>
+
+                <a href="#about"
+                    class="px-8 py-3 text-sm font-medium border border-gray-300 
+                       text-gray-700 rounded-md 
+                       hover:bg-red-600 hover:text-white 
+                       transition-all duration-300">
+                    Learn More
+                </a>
+
             </div>
+
+            <div class="mt-20">
+                <div class="w-16 h-1 bg-red-600 mx-auto rounded-full"></div>
+            </div>
+
+        </div>
+        <div class="absolute bottom-0 left-0 w-full h-40 
+        bg-gradient-to-b from-transparent to-white">
         </div>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section id="about" class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Why Choose FreshSoy?</h2>
-                <p class="text-lg text-gray-600">Quality and freshness you can trust</p>
+
+    <!-- PRODUCTS -->
+    <section id="products" class="py-24 bg-gradient-to-b from-white to-yellow-50/30">
+        <div class="max-w-6xl mx-auto px-6">
+
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-[0.3em] uppercase text-green-600 font-medium">
+                    Our Collection
+                </span>
+                <h2 class="mt-4 text-3xl font-semibold text-gray-900">
+                    Our Products
+                </h2>
+                <p class="text-gray-600 mt-3 text-sm">
+                    Handcrafted daily with premium soybeans
+                </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-lg mb-2">100% Fresh</h3>
-                    <p class="text-gray-600 text-sm">Made daily with premium ingredients</p>
-                </div>
 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold text-lg mb-2">Fast Delivery</h3>
-                    <p class="text-gray-600 text-sm">Same-day delivery available</p>
-                </div>
+                @foreach ($products as $product)
+                    <div x-data="{ open: false }"
+                        class="bg-white border border-gray-200/60 rounded-xl p-6 
+                           hover:shadow-lg hover:border-gray-300
+                           transition-all duration-300">
 
-                <div class="text-center">
-                    <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
+                        @if ($product->image)
+                            <div class="overflow-hidden rounded-lg">
+                                <img src="{{ Storage::url($product->image) }}"
+                                    class="w-full h-52 object-cover 
+                                       hover:scale-105 transition-transform duration-500">
+                            </div>
+                        @endif
+
+                        <h3 class="mt-5 text-lg font-semibold text-gray-900">
+                            {{ $product->name }}
+                        </h3>
+
+                        <p class="text-gray-600 text-sm mt-2 leading-relaxed">
+                            Freshly made daily with selected soybeans
+                        </p>
+
+                        <div class="flex items-center justify-between mt-6 pt-4 border-t border-gray-100">
+                            <span class="text-lg font-semibold text-gray-900">
+                                Rp {{ number_format($product->price, 0, ',', '.') }}
+                            </span>
+
+                            <button @click="open = true"
+                                class="text-sm px-5 py-2 rounded-md 
+                                    bg-[#DC2626] text-white font-medium
+                                    transition-colors duration-300
+                                    hover:bg-red-700">
+                                View Detail
+                            </button>
+                        </div>
+
+                        <!-- MODAL -->
+                        <div x-show="open" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 px-4"
+                            x-transition>
+
+                            <div @click.away="open = false" class="bg-white w-full max-w-md rounded-xl p-8 shadow-2xl">
+
+                                @if ($product->image)
+                                    <img src="{{ Storage::url($product->image) }}"
+                                        class="w-full h-56 object-cover rounded-lg mb-6">
+                                @endif
+
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    {{ $product->name }}
+                                </h3>
+
+                                <p class="text-gray-600 mt-4 text-sm leading-relaxed">
+                                    This product is freshly prepared every morning using premium soybeans.
+                                    High in protein and perfect for your healthy lifestyle.
+                                </p>
+
+                                <div class="mt-6 pt-6 border-t border-gray-100 flex items-center justify-between">
+                                    <span class="text-xl font-semibold text-gray-900">
+                                        Rp {{ number_format($product->price, 0, ',', '.') }}
+                                    </span>
+
+                                    <button @click="open = false"
+                                        class="bg-[#DC2626] text-white px-6 py-2 rounded-md text-sm font-medium
+                                           hover:bg-red-700 transition-all duration-300">
+                                        Close
+                                    </button>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
-                    <h3 class="font-semibold text-lg mb-2">Quality Assured</h3>
-                    <p class="text-gray-600 text-sm">Certified and safe products</p>
-                </div>
+                @endforeach
+
             </div>
-        </div>
+            <div class="mt-14 text-center">
+                <a href="{{ route('products.index') }}"
+                    class="group inline-flex items-center gap-3 px-8 py-3 text-sm font-semibold
+              bg-[#DC2626] text-white rounded-lg
+              transition-all duration-300
+              hover:bg-red-700 hover:shadow-lg hover:-translate-y-0.5">
+
+                    <!-- ICON KIRI -->
+                    <svg class="w-5 h-5 transition-transform duration-300 group-hover:rotate-12" fill="none"
+                        stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 7h18M3 12h18M3 17h18" />
+                    </svg>
+
+                    View All Products
+                </a>
+            </div>
     </section>
 
-    <!-- CONTACT SECTION -->
-    <section id="contact" class="py-20 bg-gray-50">
-        <div class="max-w-4xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold text-gray-900 mb-4">Get in Touch</h2>
-                <p class="text-lg text-gray-600">We're here to help with any questions</p>
-            </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
-                <a href="mailto:info@freshsoy.com"
-                    class="flex flex-col items-center p-6 bg-white rounded-xl border border-gray-200 hover:border-green-500 hover:shadow-lg transition-all">
-                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-3">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
+    <!-- ABOUT -->
+    <section id="about" class="py-24 bg-white">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+
+            <span class="text-xs tracking-[0.3em] uppercase text-green-600 font-medium">
+                Our Promise
+            </span>
+            <h2 class="mt-4 text-3xl font-semibold text-gray-900">
+                Why Choose FreshSoy?
+            </h2>
+
+            <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed mt-6 mb-16">
+                FreshSoy is committed to delivering high-quality soy products that are nutritious,
+                hygienic, and made with passion every single day.
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-10 text-left">
+
+                <div class="space-y-4">
+                    <div class="w-12 h-12 flex items-center justify-center bg-green-50 rounded-lg">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M5 13c4 0 7-3 7-7 4 0 7 3 7 7-4 0-7 3-7 7-4 0-7-3-7-7z" />
                         </svg>
                     </div>
-                    <h3 class="font-semibold mb-1">Email</h3>
-                    <p class="text-sm text-gray-600">info@freshsoy.com</p>
-                </a>
-
-                <a href="tel:081234567890"
-                    class="flex flex-col items-center p-6 bg-white rounded-xl border border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all">
-                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold mb-1">Phone</h3>
-                    <p class="text-sm text-gray-600">0812-3456-7890</p>
-                </a>
-
-                <div class="flex flex-col items-center p-6 bg-white rounded-xl border border-gray-200">
-                    <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-3">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                            </path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="font-semibold mb-1">Location</h3>
-                    <p class="text-sm text-gray-600">Pekanbaru, Riau</p>
+                    <h4 class="font-semibold text-gray-900">Premium Ingredients</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        We use selected high-quality soybeans to ensure rich taste and maximum nutrition.
+                    </p>
                 </div>
+
+                <div class="space-y-4">
+                    <div class="w-12 h-12 flex items-center justify-center bg-blue-50 rounded-lg">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 3l8 4v5c0 5-3.5 9-8 9s-8-4-8-9V7l8-4z" />
+                        </svg>
+                    </div>
+                    <h4 class="font-semibold text-gray-900">Hygienic Process</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Our production follows strict hygiene standards to maintain freshness and safety.
+                    </p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="w-12 h-12 flex items-center justify-center bg-yellow-50 rounded-lg">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M4 8a4 4 0 018 0 4 4 0 018 0c0 4-8 8-8 8s-8-4-8-8z" />
+                        </svg>
+                    </div>
+                    <h4 class="font-semibold text-gray-900">Made With Care</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed">
+                        Every product is made with dedication to support your healthy lifestyle.
+                    </p>
+                </div>
+
             </div>
         </div>
     </section>
