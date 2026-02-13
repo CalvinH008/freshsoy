@@ -150,7 +150,7 @@ Recent Orders
    - Hapus 1 produk
    - Cek folder storage/app/public/products
 
-⏳ HARI 19: Admin Order Management
+⏳ HARI 19: Admin Order Management ✅
  Route admin/orders
  Controller Admin\OrderController
  Method index() - tampilkan semua order

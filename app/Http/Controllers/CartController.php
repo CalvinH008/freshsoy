@@ -23,6 +23,14 @@ class CartController extends Controller
 
     public function add(Request $request, $id)
     {
+        // validasi quantity
+        $quantity = $request->input('quantity', 1);
+
+        // Validasi quantity harus >= 1
+        if ($quantity < 1) {
+            $quantity = 1;
+        }
+
         // cari product berdasarkan id
         $product = Product::find($id);
 

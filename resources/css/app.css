@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@import "tailwindcss";
+
+@layer base {
+    * {
+        @apply antialiased;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Offset untuk sticky navbar */
+    .scroll-mt-20 {
+        scroll-margin-top: 5rem;
+    }
+}
