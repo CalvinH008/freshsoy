@@ -21,10 +21,9 @@
 
             <h1 class="mt-6 text-4xl md:text-6xl leading-tight">
                 <span class="text-[#DC2626]"
-                    style="font-family: 'Fredoka', sans-serif; font-weight: 700; letter-spacing: 1px;">
+                    style="font-family: 'Fredoka', sans-serif; font-weight: 700; letter-spacing: 1px; text-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);">
                     FreshSoy
                 </span>
-
                 <span class="text-gray-50 font-semibold" style="text-shadow: 0 4px 12px rgba(0,0,0,0.35);">
                     Milk<br>
                     Made Every Morning
@@ -39,10 +38,10 @@
 
             <div class="mt-12 flex justify-center gap-4">
 
-                <a href="#products"
+                <a href=" {{ route('products.index') }} "
                     class="bg-[#DC2626] text-white px-8 py-3 rounded-md text-sm font-medium 
                        hover:bg-red-700 transition-all duration-300 shadow-sm">
-                    Shop Products
+                    Order Now
                 </a>
 
                 <a href="#about"
@@ -191,7 +190,10 @@
 
             <p class="text-gray-600 max-w-2xl mx-auto leading-relaxed mt-6 mb-16">
                 FreshSoy is committed to delivering high-quality soy products that are nutritious,
-                hygienic, and made with passion every single day.
+                hygienic, and made with passion every single day. Lorem ipsum dolor sit amet consectetur adipisicing elit. A
+                facilis nesciunt neque modi veritatis incidunt nemo quisquam quia libero, pariatur quaerat minima assumenda
+                itaque soluta eligendi praesentium sit? Quam distinctio inventore quaerat error doloribus impedit laborum
+                magni alias vel beatae temporibus quia aliquid ipsa necessitatibus veniam odio dolores, atque nihil!
             </p>
 
             <div class="grid md:grid-cols-3 gap-10 text-left">

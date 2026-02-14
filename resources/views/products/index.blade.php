@@ -6,6 +6,15 @@
 
     <div class="max-w-7xl mx-auto px-6 py-14">
 
+        <!-- BREADCRUMB -->
+        <nav class="flex items-center space-x-2 text-sm mb-6">
+            <a href="/" class="text-gray-500 hover:text-gray-900 transition-colors">Home</a>
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+            <span class="text-gray-900 font-medium">Products</span>
+        </nav>
+        
         <!-- Header -->
         <div class="mb-8">
             <h1 class="text-3xl font-semibold text-gray-900">
@@ -84,7 +93,8 @@
                             <img src="{{ Storage::url($product->image) }}"
                                 class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500">
                         @else
-                            <div class="w-full h-48 bg-gradient-to-br from-yellow-50 to-amber-100 flex items-center justify-center text-5xl">
+                            <div
+                                class="w-full h-48 bg-gradient-to-br from-yellow-50 to-amber-100 flex items-center justify-center text-5xl">
                                 🥛
                             </div>
                         @endif
@@ -113,10 +123,10 @@
                             </div>
 
                             <a href="/products/{{ $product->id }}"
-                                class="text-sm font-medium bg-gray-100 text-gray-700
+                                class="text-sm font-medium bg-red-500 text-white
                               px-4 py-2 rounded-lg
                               hover:bg-[#DC2626] hover:text-white transition-all duration-300">
-                                Detail
+                                Buy
                             </a>
 
                         </div>

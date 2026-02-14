@@ -1,225 +1,187 @@
 @extends('layouts.main')
 
-@section('title', $product->name . ' - Fresh Soy')
+@section('title', $product->name . ' - FreshSoy')
 
 @section('content')
 
-{{-- Breadcrumb --}}
-<div class="bg-gray-100 py-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center space-x-2 text-sm text-gray-600">
-            <a href="/" class="hover:text-primary-500 transition">Home</a>
-            <span>/</span>
-            <a href="{{ route('products.index') }}" class="hover:text-primary-500 transition">Menu</a>
-            <span>/</span>
-            <span class="text-gray-900 font-medium">{{ Str::limit($product->name, 30) }}</span>
-        </div>
-    </div>
-</div>
+    <div class="bg-white min-h-screen">
+        <div class="max-w-6xl mx-auto px-6 py-12">
 
-{{-- Product Detail --}}
-<section class="py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            
-            {{-- Left: Product Image --}}
-            <div>
-                <div class="bg-white rounded-2xl shadow-lg overflow-hidden sticky top-24">
-                    @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" 
-                             alt="{{ $product->name }}" 
-                             class="w-full h-auto object-cover">
-                    @else
-                        <div class="w-full h-96 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                            <i class="fas fa-image text-gray-400 text-6xl"></i>
-                        </div>
-                    @endif
-                </div>
-            </div>
-            
-            {{-- Right: Product Info --}}
-            <div>
-                <div class="bg-white rounded-2xl shadow-lg p-8">
-                    
-                    {{-- Product Name --}}
-                    <h1 class="text-4xl font-bold text-gray-900 mb-4">
-                        {{ $product->name }}
-                    </h1>
-                    
-                    {{-- Price --}}
-                    <div class="mb-6">
-                        <span class="text-5xl font-bold text-primary-600">
-                            Rp {{ number_format($product->price, 0, ',', '.') }}
-                        </span>
-                    </div>
-                    
-                    {{-- Stock --}}
-                    <div class="mb-6">
-                        @if($product->stock > 10)
-                            <span class="inline-flex items-center px-4 py-2 bg-green-100 text-green-800 rounded-full">
-                                <i class="fas fa-check-circle mr-2"></i>
-                                In Stock ({{ $product->stock }} available)
-                            </span>
-                        @elseif($product->stock > 0)
-                            <span class="inline-flex items-center px-4 py-2 bg-orange-100 text-orange-800 rounded-full">
-                                <i class="fas fa-exclamation-circle mr-2"></i>
-                                Low Stock ({{ $product->stock }} left)
-                            </span>
+            <!-- PRODUCT LAYOUT (2 Kolom Rapi) -->
+            <div class="grid md:grid-cols-2 gap-16">
+
+                <!-- LEFT: Image -->
+                <div>
+                    <div class="bg-gray-50 rounded-2xl p-12 border border-gray-100">
+                        @if ($product->image)
+                            <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}"
+                                class="w-full rounded-xl">
                         @else
-                            <span class="inline-flex items-center px-4 py-2 bg-red-100 text-red-800 rounded-full">
-                                <i class="fas fa-times-circle mr-2"></i>
-                                Out of Stock
-                            </span>
+                            <div class="w-full aspect-square flex items-center justify-center text-8xl">
+                                🥛
+                            </div>
                         @endif
                     </div>
-                    
-                    {{-- Description --}}
-                    <div class="mb-8">
-                        <h2 class="text-xl font-bold text-gray-900 mb-3">Description</h2>
-                        <p class="text-gray-600 leading-relaxed">
-                            {{ $product->description }}
+                </div>
+
+                <!-- RIGHT: Info -->
+                <div>
+
+                    <!-- Category Badge (Kecil & Simple) -->
+                    <span class="inline-block text-xs text-gray-600 bg-gray-100 px-3 py-1 rounded-full mb-4">
+                        {{ ucfirst($product->category ?? 'Product') }}
+                    </span>
+
+                    <!-- Product Name (Besar & Bold) -->
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3 leading-tight">
+                        {{ $product->name }}
+                    </h1>
+
+                    <!-- Price (Prominent) -->
+                    <div class="mb-6">
+                        <p class="text-4xl font-bold text-gray-900">
+                            Rp {{ number_format($product->price, 0, ',', '.') }}
                         </p>
                     </div>
-                    
-                    {{-- Add to Cart Form --}}
-                    @auth
-                        @if($product->stock > 0)
-                        <form action="{{ route('cart.add', $product->id) }}" method="POST" class="space-y-4">
-                            @csrf
-                            
-                            {{-- Quantity Selector --}}
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-200 my-6"></div>
+
+                    <!-- Description -->
+                    <div class="mb-6">
+                        <h3 class="text-sm font-semibold text-gray-900 mb-2">Description</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            {{ $product->description ?? 'Fresh soy milk made daily with premium ingredients. High in protein and perfect for your healthy lifestyle.' }}
+                        </p>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-200 my-6"></div>
+
+                    <!-- Specs (Grid 2 Kolom) -->
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+
+                        @if ($product->size)
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Quantity</label>
-                                <div class="flex items-center space-x-4">
-                                    <button type="button" 
-                                            onclick="decrementQty()" 
-                                            class="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-xl transition">
+                                <p class="text-xs text-gray-500 mb-1">Size</p>
+                                <p class="font-medium text-gray-900">{{ $product->size }}</p>
+                            </div>
+                        @endif
+
+                        <div>
+                            <p class="text-xs text-gray-500 mb-1">Stock</p>
+                            @if ($product->stock > 10)
+                                <p class="font-medium text-green-600">In Stock</p>
+                            @elseif($product->stock > 0)
+                                <p class="font-medium text-yellow-600">Low Stock</p>
+                            @else
+                                <p class="font-medium text-red-600">Out of Stock</p>
+                            @endif
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500 mb-1">Category</p>
+                            <p class="font-medium text-gray-900">{{ ucfirst($product->category ?? 'Beverage') }}</p>
+                        </div>
+
+                        <div>
+                            <p class="text-xs text-gray-500 mb-1">Rating</p>
+                            <div class="flex items-center space-x-1">
+                                <span class="text-yellow-400 text-sm">★★★★★</span>
+                                <span class="text-sm text-gray-500">(4.8)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-gray-200 my-6"></div>
+
+                    <!-- Add to Cart -->
+                    @if ($product->stock > 0)
+                        <form action="{{ route('cart.add', $product->id) }}" method="POST">
+                            @csrf
+
+                            <!-- Quantity (Simple & Clean) -->
+                            <div class="mb-6">
+                                <label class="text-sm font-medium text-gray-900 mb-3 block">Quantity</label>
+                                <div class="flex items-center space-x-3">
+                                    <button type="button" onclick="decreaseQty()"
+                                        class="w-10 h-10 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 font-medium">
                                         −
                                     </button>
-                                    <input type="number" 
-                                           name="quantity" 
-                                           id="quantity" 
-                                           value="1" 
-                                           min="1" 
-                                           max="{{ $product->stock }}" 
-                                           class="w-20 text-center text-2xl font-bold border-2 border-gray-300 rounded-lg py-2">
-                                    <button type="button" 
-                                            onclick="incrementQty()" 
-                                            class="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-xl transition">
+                                    <input type="number" name="quantity" id="quantity" value="1" min="1"
+                                        max="{{ $product->stock }}"
+                                        class="w-16 h-10 text-center border border-gray-300 rounded-lg font-medium text-gray-900">
+                                    <button type="button" onclick="increaseQty({{ $product->stock }})"
+                                        class="w-10 h-10 border border-gray-300 rounded-lg hover:bg-gray-50 text-gray-600 font-medium">
                                         +
                                     </button>
                                 </div>
                             </div>
-                            
-                            {{-- Add to Cart Button --}}
-                            <button type="submit" class="w-full btn-primary text-lg py-4">
-                                <i class="fas fa-shopping-cart mr-2"></i>
-                                Add to Cart
-                            </button>
-                        </form>
-                        @else
-                        <button disabled class="w-full bg-gray-300 text-gray-500 font-bold py-4 rounded-full cursor-not-allowed">
-                            Out of Stock
-                        </button>
-                        @endif
-                    @else
-                        <a href="{{ route('login') }}" class="block w-full btn-primary text-center text-lg py-4">
-                            <i class="fas fa-lock mr-2"></i>
-                            Login to Purchase
-                        </a>
-                    @endauth
-                    
-                    {{-- Product Meta --}}
-                    <div class="mt-8 pt-8 border-t border-gray-200">
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center">
-                                <i class="fas fa-tag text-primary-500 mr-3"></i>
-                                <span>Product ID: <strong>#{{ $product->id }}</strong></span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-shield-alt text-primary-500 mr-3"></i>
-                                <span>100% Authentic Product</span>
-                            </li>
-                            <li class="flex items-center">
-                                <i class="fas fa-truck text-primary-500 mr-3"></i>
-                                <span>Fast & Secure Delivery</span>
-                            </li>
-                        </ul>
-                    </div>
-                    
-                </div>
-            </div>
-            
-        </div>
-        
-    </div>
-</section>
 
-{{-- Related Products (Optional) --}}
-<section class="py-12 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-            You May Also Like
-        </h2>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            @php
-                $relatedProducts = \App\Models\Product::where('id', '!=', $product->id)
-                                                       ->take(4)
-                                                       ->get();
-            @endphp
-            
-            @foreach($relatedProducts as $related)
-            <a href="{{ route('products.show', $related->id) }}" class="product-card group">
-                <div class="relative overflow-hidden">
-                    @if($related->image)
-                        <img src="{{ asset('storage/' . $related->image) }}" 
-                             alt="{{ $related->name }}" 
-                             class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+                            <!-- Buttons (Full Width) -->
+                            <div class="space-y-3">
+                                <button type="submit"
+                                    class="w-full bg-red-600 text-white py-3.5 rounded-lg font-medium hover:bg-red-800 transition-colors">
+                                    Add to Cart
+                                </button>
+                                <a href="/products"
+                                    class="block w-full text-center border border-gray-300 text-gray-700 py-3.5 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                                    Back to Products
+                                </a>
+                            </div>
+                        </form>
                     @else
-                        <div class="w-full h-48 bg-gray-200"></div>
+                        <div class="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
+                            This product is currently out of stock
+                        </div>
                     @endif
                 </div>
-                <div class="p-4">
-                    <h3 class="font-bold text-gray-900 mb-2 line-clamp-1">{{ $related->name }}</h3>
-                    <p class="text-lg font-bold text-primary-600">
-                        Rp {{ number_format($related->price, 0, ',', '.') }}
-                    </p>
-                </div>
-            </a>
-            @endforeach
+            </div>
+
+        </div>
+
+        <!-- Related Products (Section Terpisah) -->
+        <div class="bg-gray-50 border-t border-gray-200 mt-20 py-16">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-8">You Might Also Like</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    @foreach (\App\Models\Product::where('id', '!=', $product->id)->inRandomOrder()->take(4)->get() as $related)
+<a href="/products/{{ $related->id }}" class="group bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-gray-300 transition-colors">
+                    <div class="aspect-square bg-gray-50 flex items-center justify-center overflow-hidden">
+                        @if ($related->image)
+<img src="{{ Storage::url($related->image) }}" 
+                                 alt="{{ $related->name }}" 
+                                 class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+@else
+<span class="text-5xl">🥛</span>
+@endif
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-medium text-gray-900 text-sm mb-2 line-clamp-2">{{ $related->name }}</h3>
+                        <p class="text-lg font-bold text-gray-900">Rp {{ number_format($related->price, 0, ',', '.') }}</p>
+                    </div>
+                </a>
+@endforeach
+            </div>
         </div>
     </div>
-</section>
+</div>
 
 @endsection
 
 @push('scripts')
-<script>
-// Quantity Selector Logic
-const qtyInput = document.getElementById('quantity');
-const maxQty = {{ $product->stock }};
+    <script>
+        function increaseQty(max) {
+            const input = document.getElementById('quantity');
+            const current = parseInt(input.value);
+            if (current < max) input.value = current + 1;
+        }
 
-function incrementQty() {
-    let currentVal = parseInt(qtyInput.value) || 1;
-    if (currentVal < maxQty) {
-        qtyInput.value = currentVal + 1;
-    }
-}
-
-function decrementQty() {
-    let currentVal = parseInt(qtyInput.value) || 1;
-    if (currentVal > 1) {
-        qtyInput.value = currentVal - 1;
-    }
-}
-
-// Prevent manual input over stock
-qtyInput.addEventListener('input', function() {
-    let val = parseInt(this.value) || 1;
-    if (val > maxQty) this.value = maxQty;
-    if (val < 1) this.value = 1;
-});
-</script>
-@endpush
+        function decreaseQty() {
+            const input = document.getElementById('quantity');
+            const current = parseInt(input.value);
+            if (current > 1) input.value = current - 1;
+        }
+    </script>
+@endpush)

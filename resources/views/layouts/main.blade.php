@@ -67,7 +67,7 @@
                             </svg>
                             @if (session('cart') && count(session('cart')) > 0)
                                 <span
-                                    class="absolute -top-1 -right-1 bg-green-600 text-white text-xs font-semibold rounded-full h-4 w-4 flex items-center justify-center">
+                                    class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-semibold rounded-full h-4 w-4 flex items-center justify-center">
                                     {{ count(session('cart')) }}
                                 </span>
                             @endif
@@ -126,7 +126,7 @@
                     @else
                         <a href="/login" class="text-sm font-medium text-gray-700 hover:text-gray-900">Login</a>
                         <a href="/register"
-                            class="bg-green-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors shadow-lg shadow-green-600/30">
+                            class="bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors shadow-lg shadow-red-600/30">
                             Get Started
                         </a>
                     @endauth
