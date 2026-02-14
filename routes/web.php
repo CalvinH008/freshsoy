@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     $products = Product::latest()->get();
     return view('welcome', compact('products'));
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    // Kalau user adalah admin, redirect ke admin dashboard
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    // Kalau user biasa, redirect ke landing page
+    return redirect('/');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -41,7 +47,7 @@ Route::get('/checkout/success/{orderId}', [CheckoutController::class, 'success']
 Route::get('/my-orders', [CheckoutController::class, 'myOrders'])->name('my.orders')->middleware('auth');
 
 // Route admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function (){
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('products', AdminProductController::class);
 

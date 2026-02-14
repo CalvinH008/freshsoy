@@ -13,11 +13,20 @@ class Order extends Model
         'payment_method'
     ];
 
-    public function user(){
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)
+            ->withPivot('quantity')
+            ->withTimestamps();
+    }
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
-    
-    public function items(){
+
+    public function items()
+    {
         return $this->hasMany(OrderItem::class);
     }
 
@@ -26,22 +35,26 @@ class Order extends Model
     // ═══════════════════════════════════════════════════
 
     // filter order yang pending
-    public function scopePending($query){
+    public function scopePending($query)
+    {
         return $query->where('status', 'pending');
     }
 
     // filter order yang complete
-    public function scopeCompleted($query){
+    public function scopeCompleted($query)
+    {
         return $query->where('status', 'completed');
     }
 
     // filter order yang cancel
-    public function scopeCancelled($query){
+    public function scopeCancelled($query)
+    {
         return $query->where('status', 'cancelled');
     }
 
     // Filter by status yang dynamic
-    public function scopeStatus($query, $status){
+    public function scopeStatus($query, $status)
+    {
         return $query->where('status', $status);
     }
 }

@@ -1,215 +1,215 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Admin Dashboard</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+@section('title', 'Admin Dashboard')
 
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background: #f5f5f5;
-        }
+@section('content')
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-card h3 {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 10px;
-        }
-
-        .stat-card p {
-            font-size: 32px;
-            font-weight: bold;
-        }
-
-        .stat-card.blue p {
-            color: #3b82f6;
-        }
-
-        .stat-card.orange p {
-            color: #f97316;
-        }
-
-        .stat-card.green p {
-            color: #10b981;
-        }
-
-        .stat-card.purple p {
-            color: #8b5cf6;
-        }
-
-        table {
-            width: 100%;
-            background: white;
-            border-collapse: collapse;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        th,
-        td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background: #f9fafb;
-            font-weight: 600;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .badge.pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .badge.completed {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .badge.cancelled {
-            background: #fee2e2;
-            color: #991b1b;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            background: #ef4444;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .btn:hover {
-            background: #dc2626;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-        {{-- header --}}
-        <div class="header">
-            <h1>📊 Admin Dashboard</h1>
-            <div>
-                <span>Logged in as: <strong> {{ auth()->user()->name }} </strong></span>
-                <form action=" {{ route('logout') }} " method="post" style="display: inline;">
-                    @csrf
-                    <a href="{{ route('admin.orders.index') }}" class="...">
-                        🛒 Orders
-                    </a>
-                    <button type="submit" class="btn">Logout</button>
-                </form>
-            </div>
-        </div>
-
-        {{-- statistics card --}}
-        <div class="stats">
-            <div class="stat-card blue">
-                <h3>📦 Total Orders</h3>
-                <p> {{ $totalOrders }} </p>
-            </div>
-            <div class="stat-card orange">
-                <h3>📦 Pending Orders</h3>
-                <p> {{ $pendingOrders }} </p>
-            </div>
-            <div class="stat-card green">
-                <h3>📦 Total Revenue</h3>
-                <p> Rp. {{ number_format($totalRevenue, 0, ',', '.') }} </p>
-            </div>
-            <div class="stat-card purple">
-                <h3>📦 Total Products</h3>
-                <p> {{ $totalProducts }} </p>
-            </div>
-        </div>
-
-        {{-- recent orders table --}}
-        <h2 style="margin-bottom: 15px;">Recent Orders</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Order Id</th>
-                    <th>Customer</th>
-                    <th>Total</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($recentOrders as $order)
-                    <tr>
-                        <td> {{ $order->id }} </td>
-                        <td> {{ $order->user->name }} </td>
-                        <td> Rp. {{ number_format($order->total, 0, ',', '.') }} </td>
-                        <td>
-                            @if ($order->status === 'pending')
-                                <span class="badge pending">Pending</span>
-                            @elseif ($order->status === 'completed')
-                                <span class="badge completed">Completed</span>
-                            @else
-                                <span class="badge cancelled">Cancelled</span>
-                            @endif
-                        </td>
-                        <td>{{ $order->created_at->format('d M Y, H:i') }}</td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" style="text-align: center; padding: 40px; color: #999;">
-                            Belum ada order
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+    <!-- WELCOME MESSAGE -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Welcome back, Admin! 👋</h1>
+        <p class="text-gray-500 mt-1">Here's what's happening with your store today.</p>
     </div>
-</body>
 
-</html>
+    <!-- STATISTICS CARDS WITH AMBER COLORS & ICONS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
+
+        <!-- Total Revenue -->
+        <div
+            class="bg-gradient-to-br from-amber-300 to-amber-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200 cursor-pointer">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-amber-50 text-sm mb-1">Total Revenue</p>
+                    <h2 class="text-3xl font-bold">
+                        Rp {{ number_format($totalRevenue ?? 0, 0, ',', '.') }}
+                    </h2>
+                </div>
+                <div class="bg-white/20 p-3 rounded-lg">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Orders -->
+        <div
+            class="bg-gradient-to-br from-amber-300 to-amber-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200 cursor-pointer">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-amber-50 text-sm mb-1">Total Orders</p>
+                    <h2 class="text-3xl font-bold">
+                        {{ $totalOrders ?? 0 }}
+                    </h2>
+                </div>
+                <div class="bg-white/20 p-3 rounded-lg">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Orders -->
+        <div
+            class="bg-gradient-to-br from-amber-300 to-amber-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200 cursor-pointer">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-amber-50 text-sm mb-1">Pending Orders</p>
+                    <h2 class="text-3xl font-bold">
+                        {{ $pendingOrders ?? 0 }}
+                    </h2>
+                </div>
+                <div class="bg-white/20 p-3 rounded-lg">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Products -->
+        <div
+            class="bg-gradient-to-br from-amber-300 to-amber-600 rounded-xl shadow-lg p-6 text-white transform hover:scale-105 transition-transform duration-200 cursor-pointer">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-amber-50 text-sm mb-1">Total Products</p>
+                    <h2 class="text-3xl font-bold">
+                        {{ $totalProducts ?? 0 }}
+                    </h2>
+                </div>
+                <div class="bg-white/20 p-3 rounded-lg">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RECENT ORDERS + TOP PRODUCTS -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- RECENT ORDERS -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">
+                    Recent Orders
+                </h2>
+                <a href="{{ route('admin.orders.index') }}" class="text-sm text-amber-600 hover:text-amber-700 font-medium">
+                    View All
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="text-xs text-gray-500 uppercase border-b">
+                        <tr>
+                            <th class="pb-3 text-left font-medium">Order ID</th>
+                            <th class="pb-3 text-left font-medium">Customer</th>
+                            <th class="pb-3 text-right font-medium">Total</th>
+                            <th class="pb-3 text-center font-medium">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse($recentOrders ?? [] as $order)
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-3 text-gray-900 font-medium">#{{ $order->id }}</td>
+                                <td class="py-3 text-gray-700">{{ $order->user->name ?? '-' }}</td>
+                                <td class="py-3 text-right font-semibold text-gray-900">
+                                    Rp {{ number_format($order->total, 0, ',', '.') }}
+                                </td>
+                                <td class="py-3 text-center">
+                                    <span
+                                        class="inline-flex px-2 py-1 text-xs font-medium rounded-full
+                                        {{ $order->status == 'completed'
+                                            ? 'bg-green-100 text-green-700'
+                                            : ($order->status == 'pending'
+                                                ? 'bg-yellow-100 text-yellow-700'
+                                                : ($order->status == 'cancelled'
+                                                    ? 'bg-red-100 text-red-700'
+                                                    : 'bg-blue-100 text-blue-700')) }}">
+                                        {{ ucfirst($order->status) }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="py-8 text-center text-gray-400">
+                                    No recent orders
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- TOP PRODUCTS -->
+        <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-800">
+                    Top Products
+                </h2>
+                <a href="{{ route('admin.products.index') }}"
+                    class="text-sm text-amber-600 hover:text-amber-700 font-medium">
+                    View All
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="text-xs text-gray-500 uppercase border-b">
+                        <tr>
+                            <th class="pb-3 text-left font-medium">Product</th>
+                            <th class="pb-3 text-center font-medium">Stock</th>
+                            <th class="pb-3 text-center font-medium">Orders</th>
+                            <th class="pb-3 text-right font-medium">Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        @forelse($topProducts ?? [] as $product)
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="py-3">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-lg flex items-center justify-center shadow-sm">
+                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                                            </svg>
+                                        </div>
+                                        <span class="font-medium text-gray-900">{{ $product->name }}</span>
+                                    </div>
+                                </td>
+                                <td class="py-3 text-center text-gray-700">
+                                    {{ $product->stock ?? 0 }}
+                                </td>
+                                <td class="py-3 text-center text-gray-700">
+                                    {{ $product->orders_count ?? 0 }}
+                                </td>
+                                <td class="py-3 text-right font-semibold text-gray-900">
+                                    Rp
+                                    {{ number_format(($product->price ?? 0) * ($product->orders_count ?? 0), 0, ',', '.') }}
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="py-8 text-center text-gray-400">
+                                    No product data
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+@endsection

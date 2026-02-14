@@ -88,6 +88,23 @@
                                 class="absolute right-0 mt-3 w-56 bg-white rounded-xl 
             border border-gray-200 shadow-xl 
             overflow-hidden">
+                                {{-- ADMIN DASHBOARD --}}
+                                @if (Auth::user()->role === 'admin')
+                                    <a href="{{ route('admin.dashboard') }}"
+                                        class="flex items-center px-4 py-3 text-sm text-gray-700 
+               hover:bg-gray-50 transition-colors group">
+
+                                        <svg class="w-4 h-4 mr-3 text-gray-400 group-hover:text-[#DC2626] transition-colors"
+                                            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 12l2-2m0 0l7-7 7 7m-9 2v8m-4 0h8" />
+                                        </svg>
+
+                                        Store Management
+                                    </a>
+
+                                    <div class="border-t border-gray-100"></div>
+                                @endif
 
                                 <!-- My Orders -->
                                 <a href="{{ route('my.orders') }}"

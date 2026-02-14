@@ -12,6 +12,7 @@ class OrderController extends Controller
     {
         // ambil parameter status dari url
         $status = $request->get('status');
+        $search = $request->get('search');
         // mulai query eager loading
         $query = Order::with('user');
 
@@ -19,6 +20,18 @@ class OrderController extends Controller
         if ($status && in_array($status, ['pending', 'completed', 'cancelled'])) {
             // in_array() = cek apakah $status valid
             $query->status($status);
+        }
+
+        // Search by Order ID atau Customer Name
+        if ($search) {
+            $query->where(function($q) use ($search) {
+                // Search by Order ID
+                $q->where('id', 'LIKE', "%{$search}%")
+                  // Search by Customer Name
+                  ->orWhereHas('user', function($q) use ($search) {
+                      $q->where('name', 'LIKE', "%{$search}%");
+                  });
+            });
         }
 
         $orders = $query->latest()->paginate(15);

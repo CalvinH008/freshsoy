@@ -1,199 +1,162 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('admin.layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Produk - Admin</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+@section('title', 'Add New Product')
 
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background: #f5f5f5;
-        }
+@section('content')
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            background: #3b82f6;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn:hover {
-            background: #2563eb;
-        }
-
-        .btn-secondary {
-            background: #6b7280;
-        }
-
-        .btn-secondary:hover {
-            background: #4b5563;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .error {
-            color: #ef4444;
-            font-size: 13px;
-            margin-top: 5px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container">
-
-        {{-- Header --}}
-        <div class="header">
-            <h1>➕ Tambah Produk Baru</h1>
-            <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">← Kembali</a>
+    <!-- HEADER -->
+    <div class="mb-6">
+        <div class="flex items-center gap-3 mb-2">
+            <a href="{{ route('admin.products.index') }}" class="text-gray-400 hover:text-gray-600 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </a>
+            <h1 class="text-2xl font-bold text-gray-800">Add New Product</h1>
         </div>
-
-        {{-- Form --}}
-        <div class="card">
-            <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
-                {{-- enctype="multipart/form-data" = WAJIB untuk upload file! --}}>
-                @csrf
-                {{-- @csrf = Token untuk proteksi CSRF attack --}}
-                {{-- Laravel wajib pakai ini di semua form POST/PUT/DELETE --}}
-
-                {{-- Nama Produk --}}
-                <div class="form-group">
-                    <label for="name">Nama Produk *</label>
-                    <input type="text" id="name" name="name" value="{{ old('name') }}"
-                        placeholder="Contoh: Laptop ASUS ROG">
-                    {{-- old('name') = Ambil input lama kalau validasi gagal --}}
-
-                    @error('name')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                    {{-- @error = Tampilkan pesan error kalau validasi gagal --}}
-                </div>
-
-                {{-- Deskripsi --}}
-                <div class="form-group">
-                    <label for="description">Deskripsi *</label>
-                    <textarea id="description" name="description" placeholder="Jelaskan detail produk...">{{ old('description') }}</textarea>
-
-                    @error('description')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Harga --}}
-                <div class="form-group">
-                    <label for="price">Harga (Rp) *</label>
-                    <input type="number" id="price" name="price" value="{{ old('price') }}"
-                        placeholder="Contoh: 15000000" min="0">
-
-                    @error('price')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Category --}}
-                <div class="form-group">
-                    <label for="category">Category *</label>
-                    <input type="text" id="category" name="category" value="{{ old('category') }}"
-                        placeholder="Contoh: Elektronik">
-
-                    @error('category')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Size --}}
-                <div class="form-group">
-                    <label for="size">Size *</label>
-                    <input type="text" id="size" name="size" value="{{ old('size') }}"
-                        placeholder="Contoh: M / L / XL">
-
-                    @error('size')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- Stok --}}
-                <div class="form-group">
-                    <label for="stock">Stok *</label>
-                    <input type="number" id="stock" name="stock" value="{{ old('stock') }}"
-                        placeholder="Contoh: 10" min="0">
-
-                    @error('stock')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                {{-- FOTO --}}
-                <div class="form-group">
-                    <label for="image">Foto Produk </label>
-                    <input type="file" 
-                           id="image" 
-                           name="image" 
-                           accept="image/*">
-                    <div class="hint">Format: JPG, PNG, GIF. Maksimal 2MB.</div>
-                    
-                    @error('image')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                {{-- Submit Button --}}
-                <button type="submit" class="btn">💾 Simpan Produk</button>
-            </form>
-        </div>
-
+        <p class="text-gray-500">Fill in the product details below</p>
     </div>
-</body>
 
-</html>
+    <!-- FORM -->
+    <div class="max-w-3xl">
+        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+            @csrf
+
+            <!-- PRODUCT INFO CARD -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Product Information</h2>
+
+                <div class="space-y-4">
+                    <!-- Product Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Product Name <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" name="name" value="{{ old('name') }}" required
+                            class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition @error('name') border-red-500 @enderror"
+                            placeholder="e.g. Soya Original 250ml">
+                        @error('name')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Description <span class="text-red-500">*</span>
+                        </label>
+                        <textarea name="description" rows="4" required
+                            class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition resize-none @error('description') border-red-500 @enderror"
+                            placeholder="Describe your product...">{{ old('description') }}</textarea>
+                        @error('description')
+                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <!-- Price & Stock -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Price -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Price (Rp) <span class="text-red-500">*</span>
+                            </label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="text-gray-500 text-sm">Rp</span>
+                                </div>
+                                <input type="number" name="price" value="{{ old('price') }}" required min="0"
+                                    class="w-full pl-12 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition @error('price') border-red-500 @enderror"
+                                    placeholder="0">
+                            </div>
+                            @error('price')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Stock -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Stock <span class="text-red-500">*</span>
+                            </label>
+                            <input type="number" name="stock" value="{{ old('stock') }}" required min="0"
+                                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition @error('stock') border-red-500 @enderror"
+                                placeholder="0">
+                            @error('stock')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT IMAGE CARD -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Product Image</h2>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        Upload Image
+                    </label>
+                    <div class="flex items-center gap-4">
+                        <!-- Preview -->
+                        <div id="imagePreview"
+                            class="w-32 h-32 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center bg-gray-50 overflow-hidden">
+                            <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
+
+                        <!-- Upload Button -->
+                        <div class="flex-1">
+                            <label
+                                class="inline-flex items-center gap-2 px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition cursor-pointer font-medium">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                </svg>
+                                Choose Image
+                                <input type="file" name="image" accept="image/*" class="hidden" id="imageInput">
+                            </label>
+                            <p class="text-xs text-gray-500 mt-2">PNG, JPG or JPEG (Max 2MB)</p>
+                            @error('image')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="flex items-center gap-3">
+                <button type="submit"
+                    class="px-6 py-3 bg-gradient-to-r from-amber-400 to-yellow-500 text-white rounded-lg hover:shadow-lg transition font-semibold flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Create Product
+                </button>
+                <a href="{{ route('admin.products.index') }}"
+                    class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-800 transition font-medium">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Image Preview Script -->
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').innerHTML =
+                        `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+@endsection
