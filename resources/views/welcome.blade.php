@@ -21,7 +21,7 @@
 
             <h1 class="mt-6 text-4xl md:text-6xl leading-tight">
                 <span class="text-[#DC2626]"
-                    style="font-family: 'Fredoka', sans-serif; font-weight: 700; letter-spacing: 1px; text-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);">
+                    style="font-family: 'Fredoka', sans-serif; font-weight: 700; letter-spacing: 1px; text-shadow: 0 4px 12px rgba(0,0,0,0.35);">
                     FreshSoy
                 </span>
                 <span class="text-gray-50 font-semibold" style="text-shadow: 0 4px 12px rgba(0,0,0,0.35);">

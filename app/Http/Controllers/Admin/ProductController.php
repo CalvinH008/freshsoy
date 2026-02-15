@@ -12,10 +12,24 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // query builder buat search
+        $query = Product::latest();
+
+        // ambil input pencarian
+        $search = $request->get('search');
+
+        // filter pencarian
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('description', 'LIKE', "%{$search}%")
+                    ->orWhere('price', $search); // kalau mau exact match
+            });
+        }
         // ambil produk dan urutkan yang paling baru
-        $products = Product::latest()->paginate(10);
+        $products = $query->paginate(10);
         // kirim ke view
         return view('admin.products.index', compact('products'));
     }
@@ -39,12 +53,13 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
-            'stock' => 'required|integer|min:0', 
+            'stock' => 'required|integer|min:0',
             'category' => 'required|string|max:255',
+            'size' => 'required',
             'image' => 'nullable|image|mimes:jpeg,jpg,png,gif|max:2048',
         ]);
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $validated['image'] = $request->file('image')->store('products', 'public');
         }
 
@@ -70,7 +85,7 @@ class ProductController extends Controller
         // findOrFail() = kalau gak ketemu, otomatis 404
         $product = Product::findOrFail($id);
 
-        return view('admin.products.edit', compact('product'));    
+        return view('admin.products.edit', compact('product'));
     }
 
     /**
@@ -91,9 +106,9 @@ class ProductController extends Controller
         ]);
 
         // ubah foto baru jika user upload foto yang baru
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             // hapus foto lama jika ada
-            if($product->image){
+            if ($product->image) {
                 // Storage::delete() = hapus file dari storage
                 // Parameter: path file (contoh: products/abc123.jpg)
                 Storage::disk('public')->delete($product->image);
@@ -105,7 +120,7 @@ class ProductController extends Controller
 
         // simpan perubahan
         $product->update($validated);
-        
+
         return redirect()->route('admin.products.index')->with('success', 'Product Updated Successfully');
     }
 
@@ -118,7 +133,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         // hapus foto jika ada
-        if($product->image){
+        if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
 

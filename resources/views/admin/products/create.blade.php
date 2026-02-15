@@ -86,6 +86,37 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <!-- Category -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Category <span class="text-red-500">*</span>
+                            </label>
+                            <select name="category" required
+                                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition @error('category') border-red-500 @enderror">
+                                <option value="">Select Category</option>
+                                <option value="minuman" {{ old('category') == 'minuman' ? 'selected' : '' }}>Drink
+                                </option>
+                                <option value="makanan" {{ old('category') == 'makanan' ? 'selected' : '' }}>Food</option>
+                            </select>
+                            @error('category')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <!-- Size -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Size <span class="text-gray-400">(Optional)</span>
+                            </label>
+                            <input type="text" name="size" value="{{ old('size') }}"
+                                class="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent transition @error('size') border-red-500 @enderror"
+                                placeholder="e.g. 250ml, 1L, 1 porsi">
+                            @error('size')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
             </div>
 

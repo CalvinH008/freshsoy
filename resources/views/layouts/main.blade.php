@@ -46,13 +46,13 @@
                 <!-- Menu (Center) -->
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="/"
-                        class="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors">HOME</a>
+                        class="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors">HOME</a>
                     <a href="#products"
-                        class="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors scroll-link">PRODUCTS</a>
+                        class="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors scroll-link">PRODUCTS</a>
                     <a href="#about"
-                        class="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors scroll-link">ABOUT</a>
+                        class="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors scroll-link">ABOUT</a>
                     <a href="#contact"
-                        class="text-base font-medium text-gray-700 hover:text-gray-900 transition-colors scroll-link">CONTACT</a>
+                        class="text-lg font-medium text-gray-700 hover:text-gray-900 transition-colors scroll-link">CONTACT</a>
                 </div>
 
                 <!-- Actions (Right) -->
