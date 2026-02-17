@@ -102,7 +102,10 @@ class CheckoutController extends Controller
 
     public function myOrders(){
         // ambil semua order user yang login, urutkan yang paling baru
-        $orders = Order::where('user_id', Auth::id())->orderBy('created_at', 'desc')->get();
+        $orders = Order::with('items.product')
+                            ->where('user_id', Auth::id())
+                            ->orderBy('created_at', 'desc')
+                            ->get();
         return view('checkout.my-orders', compact('orders'));
     }
 }
