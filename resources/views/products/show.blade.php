@@ -184,4 +184,4 @@
             if (current > 1) input.value = current - 1;
         }
     </script>
-@endpush)
+@endpush
